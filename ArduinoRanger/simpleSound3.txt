@@ -1,0 +1,31 @@
+
+#include <Arduino.h>
+#include <MeAuriga.h>
+
+MeSoundSensor soundsensor_14(14);
+MeRGBLed rgbled_0(0, 12);
+
+float loud = 0;
+float temp = 0;
+
+void setup() {
+  rgbled_0.setpin(44);
+  rgbled_0.fillPixelsBak(0, 2, 1);
+
+}
+
+void loop() {
+	loud = soundsensor_14.strength();
+   temp = ((250 - loud)) / 200;
+   if(temp < 0.1){
+      temp = 0.1;
+   }
+
+   rgbled_0.setColor(1,255,0,0);
+   rgbled_0.show();
+   delay(250);
+
+   rgbled_0.setColor(1,0,0,0);
+   rgbled_0.show();
+   delay(temp*1000);
+}
